@@ -21,33 +21,36 @@ void setup()
 void loop() 
 {
   // Look for new cards
-  if ( ! mfrc522.PICC_IsNewCardPresent()) 
+  if ( ! mfrc522.PICC_IsNewCardPresent()) // 
   {
     return;
   }
+  
   // Select one of the cards
   if ( ! mfrc522.PICC_ReadCardSerial()) 
   {
+    digitalWrite(13, LOW);
     return;
   }
+  digitalWrite(13, HIGH);
   //Show UID on serial monitor
-  
   String content= "";
   byte letter;
+  // Check card validity
   for (byte i = 0; i < mfrc522.uid.size; i++) 
   {
-     
      content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
      content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
+  // If card is valid, display
   Serial.println();
   Serial.print("User No./Name:    ");
   content.toUpperCase();
 
   // UID & info of cards with access
-  if (content.substring(1) == "E9 9C B0 E3" ) 
+  if (content.substring(1) == "E9 9C B0 E3" ) //UID
   {
-    Serial.println("1-Mejiro McQueend");
+    Serial.println("1-Mejiro McQueen");
     ser.write(1);
     Serial.println();
     
@@ -55,7 +58,7 @@ void loop()
   }
    if (content.substring(1) ==  "01 15 C9 1F" ) 
   {
-    Serial.println("2- ");
+    Serial.println("2-Satono Diamond ");
     ser.write(2);
     Serial.println();
     

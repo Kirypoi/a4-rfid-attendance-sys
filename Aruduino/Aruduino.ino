@@ -47,8 +47,8 @@ void loop()
   Serial.print("User No./Name:    ");
   content.toUpperCase();
 
-  // UID & info of cards with access
-  if (content.substring(1) == "E9 9C B0 E3" ) //UID
+  // UID & info of cards with access ---- to sub these info to the card with the id
+  if (content.substring(1) == "E9 9C B0 E3" ) //UID --- Please change to whatever id the physical tag carries
   {
     Serial.println("1-Mejiro McQueen");
     ser.write(1);
@@ -56,7 +56,7 @@ void loop()
     
     delay(3000);
   }
-   if (content.substring(1) ==  "01 15 C9 1F" ) 
+   if (content.substring(1) ==  "01 15 C9 1F" ) //UID --- Please change to whatever id the physical tag carries
   {
     Serial.println("2-Satono Diamond ");
     ser.write(2);

@@ -26,12 +26,18 @@ void loop()
     return;
   }
   
-  // Select one of the cards
+  // If there is a card, read its serial
   if ( ! mfrc522.PICC_ReadCardSerial()) 
-  {
-    digitalWrite(13, LOW);
+  { 
+    // Display card id
+    // unsigned long uid = getID();
+    // if(uid !== 0){
+    // Serial.print("Card detected, UID: "); Serial.println(uid);
+
+    digitalWrite(13, HIGH); 
     return;
   }
+  //
   digitalWrite(13, HIGH);
   //Show UID on serial monitor
   String content= "";
@@ -47,8 +53,8 @@ void loop()
   Serial.print("User No./Name:    ");
   content.toUpperCase();
 
-  // UID & info of cards with access ---- to sub these info to the card with the id
-  if (content.substring(1) == "E9 9C B0 E3" ) //UID --- Please change to whatever id the physical tag carries
+  // UID & info of cards with access ---- to register the cards
+  if (content.substring(1) == "E9 9C B0 E3" ) //UID --- Please change to whatever id the physical tag carries -- if dont know use getID()
   {
     Serial.println("1-Mejiro McQueen");
     ser.write(1);
@@ -72,4 +78,19 @@ void pinFlash(){
   digitalWrite(13, LOW);
   delay(100);
 }
+
+// To get card id in case not knowtt
+unsigned long getID(){
+  if ( ! mfrc522.PICC_ReadCardSerial()) { //Since a PICC placed get Serial and continue
+    return 0;
+  }
+  unsigned long hex_num;
+  hex_num =  mfrc522.uid.uidByte[0] << 24;
+  hex_num += mfrc522.uid.uidByte[1] << 16;
+  hex_num += mfrc522.uid.uidByte[2] <<  8;
+  hex_num += mfrc522.uid.uidByte[3];
+  mfrc522.PICC_HaltA(); // Stop reading
+  return hex_num;
+}
+
 

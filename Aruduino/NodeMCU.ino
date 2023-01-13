@@ -23,7 +23,6 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 Adafruit_MQTT_Publish Attendance = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/A4_RFID_ATTENDANCE");
  
 char ID;
-/*************************** Sketch Code ************************************/
  
 void setup() {
   Serial.begin(115200);
